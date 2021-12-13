@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 
 # Create a DB Object
+# opening up the db connection
 DB = SQLAlchemy()
 
 
@@ -8,22 +9,24 @@ DB = SQLAlchemy()
 
 class User(DB.Model):
     '''Creates a User Table with SQLAlchemy'''
-    # id column
-    id = DB.Column(DB.BigInteger, primary_key = True)
-    # username column
+    # id column schema
+    id = DB.Column(DB.BigInteger, primary_key = True, nullable = False)
+    # username column schema
     username = DB.Column(DB.String, nullable = False)
 
 # Make a Tweet Table by creating a tweet Class
 
 class Tweet(DB.Model):
     '''Creates a Tweet Table with SQLAlchemy'''
-    # id column
-    id = DB.Column(DB.BigInteger, primary_key = True)
-    # text column
-    text = DB.Column(DB.Unicode(300)) # Unicode allows for both text and links and emojis, etc.
+    # id column schema
+    id = DB.Column(DB.BigInteger, primary_key = True, nullable=False)
+    # text column schema
+    text = DB.Column(DB.Unicode(300), nullable=False) # Unicode allows for both text and links and emojis, etc.
 
-    # Create a relationship between a tweet and a user
+    # User Column schema
     user_id = DB.Column(DB.BigInteger, DB.ForeignKey('user.id'), nullable=False)
 
-    # Finalizing the relationship making sure it goes both ways
+    # Set up a relationship between tweets and IDs
+    # This will automatically add a new id to both the tweet and the user
+    # making sure it goes both ways
     user = DB.relationship('User', backref=DB.backref('tweets', lazy=True))

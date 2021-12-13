@@ -1,25 +1,25 @@
 from flask import Flask, render_template
 from .models import DB, User, Tweet
 
+# Create a 'factory' for serving up the app when is launched
 def create_app():
     # initializes our app
     app = Flask(__name__)
 
     # Database configurations
     app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///db.sqlite3'
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False # Turn off verification when we request changes to db
 
     # Give our APP access to our database
     DB.init_app(app)
 
     # Listen to a "route"
-    # '/' is the home page route
+    # Make our "Home" "root" route. '/' is the home page route
     @app.route('/')
     def root():
         # query the DB for all users
         users = User.query.all()
         #what i want to happen when somebody goes to the home page
-
         return render_template('base.html', title = "Home", users = users)
 
     @app.route('/populate')
