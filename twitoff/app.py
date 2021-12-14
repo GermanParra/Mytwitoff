@@ -1,5 +1,7 @@
 from flask import Flask, render_template
+from twitoff.twitter import add_or_update_user
 from .models import DB, User, Tweet
+from .twitter import add_or_update_user, get_all_usernames
 
 # Create a 'factory' for serving up the app when is launched
 def create_app():
@@ -22,18 +24,18 @@ def create_app():
         #what i want to happen when somebody goes to the home page
         return render_template('base.html', title = "Home", users = users)
 
+    @app.route('/update')
+    def update():
+        '''update all users'''
+        usernames = get_all_usernames()
+        for username in usernames:
+            add_or_update_user(username)
+        return "Updated"
+
     @app.route('/populate')
     def populate():
-        ger = User(id=1, username='Ger')
-        DB.session.add(ger)
-        scarlet = User(id=2, username='Yuruani')
-        DB.session.add(scarlet)
-        tweet1 = Tweet(id=1, text='Ger tweet text', user=ger)
-        DB.session.add(tweet1)
-        tweet2 = Tweet(id=2, text='Yuruani tweet text', user=scarlet)
-        DB.session.add(tweet2)
-        #save database
-        DB.session.commit()
+        add_or_update_user('NASA')
+        add_or_update_user('elonmusk')
         return '''Created some users.
         <a href='/'>Go to Home</a>
         <a href='/reset'>Go to reset </a>
