@@ -26,6 +26,7 @@ class Tweet(DB.Model):
     '''Creates a Tweet Table with SQLAlchemy'''
     # id column schema
     id = DB.Column(DB.BigInteger, primary_key = True, nullable=False)
+
     # text column schema
     text = DB.Column(DB.Unicode(300), nullable=False) # Unicode allows for both text and links and emojis, etc.
 
