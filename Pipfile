@@ -10,7 +10,7 @@ flask-sqlalchemy = "*"
 tweepy = "*"
 spacy = "*"
 python-dotenv = "*"
-scikit-learn = {path = "./scikit_learn-1.0.1-cp310-cp310-win_amd64.whl"}
+scikit-learn = "*"
 gunicorn = "*"
 
 [dev-packages]
