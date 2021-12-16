@@ -98,8 +98,6 @@ def create_app():
 
     return app
 
-
-
     
     # # kind of like what jinja2 does to our web pages
     # app_title = 'Mytwitoff DS33'
